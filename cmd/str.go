@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/go-redis/redis/v7"
@@ -9,7 +10,7 @@ import (
 )
 
 var strCmd = &cobra.Command{
-	Use:   "str-sample",
+	Use: "str-sample",
 	Run: func(cmd *cobra.Command, args []string) {
 		basicCli := initRedisRepository()
 		defer basicCli.Close()
@@ -70,7 +71,7 @@ var strCmd = &cobra.Command{
 		for k := range testDt {
 			value, err := strCli.Get(k)
 			if err != nil {
-				if err == redis.Nil {
+				if errors.Is(err, redis.Nil) {
 					fmt.Printf("id: %d, does not exist\n", k)
 					continue
 				}

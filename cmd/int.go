@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/go-redis/redis/v7"
@@ -71,7 +72,7 @@ var intCmd = &cobra.Command{
 		for k := range testDt {
 			value, err := intCli.Get(k)
 			if err != nil {
-				if err == redis.Nil {
+				if errors.Is(err, redis.Nil) {
 					fmt.Printf("id %d does not exist\n", k)
 					continue
 				}
