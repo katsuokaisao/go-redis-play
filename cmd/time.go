@@ -11,7 +11,7 @@ import (
 )
 
 var timeCmd = &cobra.Command{
-	Use:   "time-example",
+	Use:   "time-sample",
 	Short: "Time example",
 	Long:  `Time example`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -51,6 +51,12 @@ var timeCmd = &cobra.Command{
 			}
 			fmt.Printf("id %d has value: %s\n", k, value)
 		}
+
+		values, err := timeCli.MGet(1, 100)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("mget values: %v\n", values)
 
 		for k := range testDt {
 			if err := timeCli.Del(k); err != nil {

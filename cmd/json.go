@@ -77,6 +77,18 @@ var jsonCmd = &cobra.Command{
 			fmt.Printf("id %d has value: %s\n", k, string(b))
 		}
 
+		values, err := jsonCli.MGet(1, 100)
+		if err != nil {
+			panic(err)
+		}
+		for k, v := range values {
+			b, err := json.MarshalIndent(v, "", "   ")
+			if err != nil {
+				panic(err)
+			}
+			fmt.Printf("mget id %d has value: %s\n", k, string(b))
+		}
+
 		for k := range testDt {
 			if err := jsonCli.Del(k); err != nil {
 				panic(err)

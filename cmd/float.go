@@ -20,8 +20,8 @@ var floatCmd = &cobra.Command{
 		floatCli := iredis.NewFloatExampleRepository(basicCli)
 
 		testDt := map[uint]float64{
-			1:   100.0,
-			100: 200.0,
+			1:   100.1,
+			100: 200.2,
 		}
 
 		for k, v := range testDt {
@@ -50,6 +50,12 @@ var floatCmd = &cobra.Command{
 			}
 			fmt.Printf("id %d has value: %f\n", k, value)
 		}
+
+		values, err := floatCli.MGet(1, 100)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("mget values: %v\n", values)
 
 		for k := range testDt {
 			if err := floatCli.Del(k); err != nil {

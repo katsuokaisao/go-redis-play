@@ -28,7 +28,7 @@ var bytesCmd = &cobra.Command{
 			if err := bytesCli.Set(k, v); err != nil {
 				panic(err)
 			}
-			fmt.Printf("id %d sets %s\n", k, v)
+			fmt.Printf("set id %d sets %s\n", k, v)
 		}
 
 		for k := range testDt {
@@ -37,9 +37,9 @@ var bytesCmd = &cobra.Command{
 				panic(err)
 			}
 			if exists {
-				fmt.Printf("id %d exists\n", k)
+				fmt.Printf("exists id %d exists\n", k)
 			} else {
-				fmt.Printf("id %d does not exist\n", k)
+				fmt.Printf("exists id %d does not exist\n", k)
 			}
 		}
 
@@ -48,14 +48,22 @@ var bytesCmd = &cobra.Command{
 			if err != nil {
 				panic(err)
 			}
-			fmt.Printf("id %d has value: %s\n", k, value)
+			fmt.Printf("get id %d has value: %s\n", k, value)
+		}
+
+		values, err := bytesCli.MGet(1, 100)
+		if err != nil {
+			panic(err)
+		}
+		for k, v := range values {
+			fmt.Printf("mget id %d has value: %s\n", k, v)
 		}
 
 		for k := range testDt {
 			if err := bytesCli.Del(k); err != nil {
 				panic(err)
 			}
-			fmt.Printf("id %d deleted\n", k)
+			fmt.Printf("del id %d deleted\n", k)
 		}
 
 		for k := range testDt {
@@ -64,9 +72,9 @@ var bytesCmd = &cobra.Command{
 				panic(err)
 			}
 			if exists {
-				fmt.Printf("id %d exists\n", k)
+				fmt.Printf("exists id %d exists\n", k)
 			} else {
-				fmt.Printf("id %d does not exist\n", k)
+				fmt.Printf("exists id %d does not exist\n", k)
 			}
 		}
 
@@ -74,12 +82,12 @@ var bytesCmd = &cobra.Command{
 			value, err := bytesCli.Get(k)
 			if err != nil {
 				if errors.Is(err, redis.Nil) {
-					fmt.Printf("id %d does not exist\n", k)
+					fmt.Printf("get id %d does not exist\n", k)
 					continue
 				}
 				panic(err)
 			}
-			fmt.Printf("id %d has value: %s\n", k, value)
+			fmt.Printf("get id %d has value: %s\n", k, value)
 		}
 
 	},

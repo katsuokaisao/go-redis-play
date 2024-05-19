@@ -50,6 +50,12 @@ var intCmd = &cobra.Command{
 			fmt.Printf("id %d has value: %d\n", k, value)
 		}
 
+		values, err := intCli.MGet(1, 100)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("mget values: %v\n", values)
+
 		for k := range testDt {
 			if err := intCli.Del(k); err != nil {
 				panic(err)
