@@ -39,7 +39,7 @@ func (repo *intExampleRepository) MGet(ids ...uint) (map[uint]int64, error) {
 		keys[i] = repo.keyFunc(id)
 	}
 
-	values, err := repo.cli.MGet(keys...)
+	values, err := repo.cli.MGetInt64(keys...)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (repo *intExampleRepository) MGet(ids ...uint) (map[uint]int64, error) {
 		if values[i] == nil {
 			continue
 		}
-		res[id] = values[i].(int64)
+		res[id] = *values[i]
 	}
 
 	return res, nil

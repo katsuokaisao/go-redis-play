@@ -37,7 +37,7 @@ func (r *floatExampleRepository) MGet(ids ...uint) (map[uint]float64, error) {
 		keys[i] = r.keyFunc(id)
 	}
 
-	values, err := r.cli.MGet(keys...)
+	values, err := r.cli.MGetFloat64(keys...)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (r *floatExampleRepository) MGet(ids ...uint) (map[uint]float64, error) {
 		if values[i] == nil {
 			continue
 		}
-		res[id] = values[i].(float64)
+		res[id] = *values[i]
 	}
 
 	return res, nil

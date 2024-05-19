@@ -51,7 +51,7 @@ func (r *jsonExampleRepository) MGet(ids ...uint) (map[uint]*domain.Example, err
 		keys[i] = r.keyFunc(id)
 	}
 
-	values, err := r.cli.MGet(keys...)
+	values, err := r.cli.MGetString(keys...)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (r *jsonExampleRepository) MGet(ids ...uint) (map[uint]*domain.Example, err
 			continue
 		}
 		var e domain.Example
-		if err := json.Unmarshal(values[i].([]byte), &e); err != nil {
+		if err := json.Unmarshal([]byte(*values[i]), &e); err != nil {
 			return nil, fmt.Errorf("failed to unmarshal json: %w", err)
 		}
 		res[id] = &e

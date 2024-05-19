@@ -38,7 +38,7 @@ func (r *boolExampleRepository) MGet(ids ...uint) (map[uint]bool, error) {
 		keys[i] = r.keyFunc(id)
 	}
 
-	values, err := r.cli.MGet(keys...)
+	values, err := r.cli.MGetBool(keys...)
 	if err != nil {
 		return nil, err
 	}
@@ -48,12 +48,7 @@ func (r *boolExampleRepository) MGet(ids ...uint) (map[uint]bool, error) {
 		if values[i] == nil {
 			continue
 		}
-		s := values[i].(string)
-		b, err := strconv.ParseBool(s)
-		if err != nil {
-			return nil, err
-		}
-		res[id] = b
+		res[id] = *values[i]
 	}
 
 	return res, nil

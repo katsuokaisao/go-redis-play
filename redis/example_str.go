@@ -39,17 +39,17 @@ func (repo *strExampleRepository) MGet(ids ...uint) (map[uint]string, error) {
 		keys[i] = repo.keyFunc(id)
 	}
 
-	values, err := repo.cli.MGet(keys...)
+	values, err := repo.cli.MGetString(keys...)
 	if err != nil {
 		return nil, err
 	}
 
 	res := make(map[uint]string, len(ids))
 	for i, id := range ids {
-		if values[i] == nil {
+		if len(*values[i]) == 0 {
 			continue
 		}
-		res[id] = values[i].(string)
+		res[id] = *values[i]
 	}
 
 	return res, nil

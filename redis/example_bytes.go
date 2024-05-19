@@ -37,7 +37,7 @@ func (r *bytesExampleRepository) MGet(ids ...uint) (map[uint][]byte, error) {
 		keys[i] = r.keyFunc(id)
 	}
 
-	values, err := r.cli.MGet(keys...)
+	values, err := r.cli.MGetBytes(keys...)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (r *bytesExampleRepository) MGet(ids ...uint) (map[uint][]byte, error) {
 		if values[i] == nil {
 			continue
 		}
-		res[id] = values[i].([]byte)
+		res[id] = values[i]
 	}
 
 	return res, nil

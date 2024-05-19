@@ -37,7 +37,7 @@ func (r *timeExampleRepository) MGet(ids ...uint) (map[uint]time.Time, error) {
 		keys[i] = r.keyFunc(id)
 	}
 
-	values, err := r.cli.MGet(keys...)
+	values, err := r.cli.MGetTime(keys...)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (r *timeExampleRepository) MGet(ids ...uint) (map[uint]time.Time, error) {
 		if values[i] == nil {
 			continue
 		}
-		res[id] = values[i].(time.Time)
+		res[id] = *values[i]
 	}
 
 	return res, nil

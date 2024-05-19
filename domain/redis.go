@@ -7,17 +7,22 @@ type BasicRedisRepository interface {
 	Close() error
 	SetString(key, value string, ttl time.Duration) error
 	GetString(key string) (string, error)
+	MGetString(keys ...string) ([]*string, error)
 	SetInt64(key string, value int64, ttl time.Duration) error
 	GetInt64(key string) (int64, error)
+	MGetInt64(keys ...string) ([]*int64, error)
 	SetFloat64(key string, value float64, ttl time.Duration) error
 	GetFloat64(key string) (float64, error)
+	MGetFloat64(keys ...string) ([]*float64, error)
 	SetBool(key string, value bool, ttl time.Duration) error
 	GetBool(key string) (bool, error)
+	MGetBool(keys ...string) ([]*bool, error)
 	SetBytes(key string, value []byte, ttl time.Duration) error
 	GetBytes(key string) ([]byte, error)
+	MGetBytes(keys ...string) ([][]byte, error)
 	SetTime(key string, value time.Time, ttl time.Duration) error
 	GetTime(key string) (time.Time, error)
-	MGet(keys ...string) ([]interface{}, error)
+	MGetTime(keys ...string) ([]*time.Time, error)
 	Exists(key string) (bool, error)
 	Del(key string) error
 }
