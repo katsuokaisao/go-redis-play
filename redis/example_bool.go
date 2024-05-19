@@ -2,6 +2,7 @@ package redis
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/katsuokaisao/go-redis-play/domain"
@@ -47,7 +48,12 @@ func (r *boolExampleRepository) MGet(ids ...uint) (map[uint]bool, error) {
 		if values[i] == nil {
 			continue
 		}
-		res[id] = values[i].(bool)
+		s := values[i].(string)
+		b, err := strconv.ParseBool(s)
+		if err != nil {
+			return nil, err
+		}
+		res[id] = b
 	}
 
 	return res, nil
