@@ -29,7 +29,7 @@ var timeCmd = &cobra.Command{
 			if err := timeCli.Set(k, v); err != nil {
 				panic(err)
 			}
-			fmt.Printf("id %d sets %s\n", k, v)
+			fmt.Printf("set id %d sets %s\n", k, v)
 		}
 
 		for k := range testDt {
@@ -38,9 +38,9 @@ var timeCmd = &cobra.Command{
 				panic(err)
 			}
 			if exists {
-				fmt.Printf("id %d exists\n", k)
+				fmt.Printf("exists id %d exists\n", k)
 			} else {
-				fmt.Printf("id %d does not exist\n", k)
+				fmt.Printf("exists id %d does not exist\n", k)
 			}
 		}
 
@@ -49,7 +49,7 @@ var timeCmd = &cobra.Command{
 			if err != nil {
 				panic(err)
 			}
-			fmt.Printf("id %d has value: %s\n", k, value)
+			fmt.Printf("get id %d has value: %s\n", k, value)
 		}
 
 		values, err := timeCli.MGet(1, 100)
@@ -62,7 +62,7 @@ var timeCmd = &cobra.Command{
 			if err := timeCli.Del(k); err != nil {
 				panic(err)
 			}
-			fmt.Printf("id %d deleted\n", k)
+			fmt.Printf("del id %d deleted\n", k)
 		}
 
 		for k := range testDt {
@@ -71,9 +71,9 @@ var timeCmd = &cobra.Command{
 				panic(err)
 			}
 			if exists {
-				fmt.Printf("id %d exists\n", k)
+				fmt.Printf("exists id %d exists\n", k)
 			} else {
-				fmt.Printf("id %d does not exist\n", k)
+				fmt.Printf("exists id %d does not exist\n", k)
 			}
 		}
 
@@ -81,12 +81,12 @@ var timeCmd = &cobra.Command{
 			value, err := timeCli.Get(k)
 			if err != nil {
 				if errors.Is(err, redis.Nil) {
-					fmt.Printf("id %d does not exist\n", k)
+					fmt.Printf("get id %d does not exist\n", k)
 					continue
 				}
 				panic(err)
 			}
-			fmt.Printf("id %d has value: %s\n", k, value)
+			fmt.Printf("get id %d has value: %s\n", k, value)
 		}
 	},
 }

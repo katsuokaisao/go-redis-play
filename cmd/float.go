@@ -28,7 +28,7 @@ var floatCmd = &cobra.Command{
 			if err := floatCli.Set(k, v); err != nil {
 				panic(err)
 			}
-			fmt.Printf("id %d sets %f\n", k, v)
+			fmt.Printf("set id %d sets %f\n", k, v)
 		}
 
 		for k := range testDt {
@@ -37,9 +37,9 @@ var floatCmd = &cobra.Command{
 				panic(err)
 			}
 			if exists {
-				fmt.Printf("id %d exists\n", k)
+				fmt.Printf("exists id %d exists\n", k)
 			} else {
-				fmt.Printf("id %d does not exist\n", k)
+				fmt.Printf("exists id %d does not exist\n", k)
 			}
 		}
 
@@ -48,7 +48,7 @@ var floatCmd = &cobra.Command{
 			if err != nil {
 				panic(err)
 			}
-			fmt.Printf("id %d has value: %f\n", k, value)
+			fmt.Printf("get id %d has value: %f\n", k, value)
 		}
 
 		values, err := floatCli.MGet(1, 100)
@@ -61,7 +61,7 @@ var floatCmd = &cobra.Command{
 			if err := floatCli.Del(k); err != nil {
 				panic(err)
 			}
-			fmt.Printf("id %d deleted\n", k)
+			fmt.Printf("del id %d deleted\n", k)
 		}
 
 		for k := range testDt {
@@ -70,9 +70,9 @@ var floatCmd = &cobra.Command{
 				panic(err)
 			}
 			if exists {
-				fmt.Printf("id %d exists\n", k)
+				fmt.Printf("exists id %d exists\n", k)
 			} else {
-				fmt.Printf("id %d does not exist\n", k)
+				fmt.Printf("exists id %d does not exist\n", k)
 			}
 		}
 
@@ -80,12 +80,12 @@ var floatCmd = &cobra.Command{
 			value, err := floatCli.Get(k)
 			if err != nil {
 				if errors.Is(err, redis.Nil) {
-					fmt.Printf("id %d does not exist\n", k)
+					fmt.Printf("get id %d does not exist\n", k)
 				} else {
 					panic(err)
 				}
 			} else {
-				fmt.Printf("id %d has value: %f\n", k, value)
+				fmt.Printf("get id %d has value: %f\n", k, value)
 			}
 		}
 	},
