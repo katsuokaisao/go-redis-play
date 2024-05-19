@@ -21,6 +21,7 @@ func init() {
 	rootCmd.AddCommand(intCmd)
 	rootCmd.AddCommand(floatCmd)
 	rootCmd.AddCommand(boolCmd)
+	rootCmd.AddCommand(bytesCmd)
 }
 
 func initRedisRepository() domain.BasicRedisRepository {
