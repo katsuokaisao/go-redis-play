@@ -33,6 +33,28 @@ func (repo *intExampleRepository) Get(id uint) (int64, error) {
 	return repo.cli.GetInt64(repo.keyFunc(id))
 }
 
+func (repo *intExampleRepository) MGet(ids ...uint) (map[uint]int64, error) {
+	keys := make([]string, len(ids))
+	for i, id := range ids {
+		keys[i] = repo.keyFunc(id)
+	}
+
+	values, err := repo.cli.MGet(keys...)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make(map[uint]int64, len(ids))
+	for i, id := range ids {
+		if values[i] == nil {
+			continue
+		}
+		res[id] = values[i].(int64)
+	}
+
+	return res, nil
+}
+
 func (repo *intExampleRepository) Del(id uint) error {
 	return repo.cli.Del(repo.keyFunc(id))
 }

@@ -33,6 +33,28 @@ func (repo *strExampleRepository) Get(id uint) (string, error) {
 	return repo.cli.GetString(repo.keyFunc(id))
 }
 
+func (repo *strExampleRepository) MGet(ids ...uint) (map[uint]string, error) {
+	keys := make([]string, len(ids))
+	for i, id := range ids {
+		keys[i] = repo.keyFunc(id)
+	}
+
+	values, err := repo.cli.MGet(keys...)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make(map[uint]string, len(ids))
+	for i, id := range ids {
+		if values[i] == nil {
+			continue
+		}
+		res[id] = values[i].(string)
+	}
+
+	return res, nil
+}
+
 func (repo *strExampleRepository) Del(id uint) error {
 	return repo.cli.Del(repo.keyFunc(id))
 }

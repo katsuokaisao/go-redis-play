@@ -31,6 +31,28 @@ func (r *boolExampleRepository) Get(id uint) (bool, error) {
 	return r.cli.GetBool(r.keyFunc(id))
 }
 
+func (r *boolExampleRepository) MGet(ids ...uint) (map[uint]bool, error) {
+	keys := make([]string, len(ids))
+	for i, id := range ids {
+		keys[i] = r.keyFunc(id)
+	}
+
+	values, err := r.cli.MGet(keys...)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make(map[uint]bool, len(ids))
+	for i, id := range ids {
+		if values[i] == nil {
+			continue
+		}
+		res[id] = values[i].(bool)
+	}
+
+	return res, nil
+}
+
 func (r *boolExampleRepository) Del(id uint) error {
 	return r.cli.Del(r.keyFunc(id))
 }

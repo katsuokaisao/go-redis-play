@@ -31,6 +31,28 @@ func (r *floatExampleRepository) Get(id uint) (float64, error) {
 	return r.cli.GetFloat64(r.keyFunc(id))
 }
 
+func (r *floatExampleRepository) MGet(ids ...uint) (map[uint]float64, error) {
+	keys := make([]string, len(ids))
+	for i, id := range ids {
+		keys[i] = r.keyFunc(id)
+	}
+
+	values, err := r.cli.MGet(keys...)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make(map[uint]float64, len(ids))
+	for i, id := range ids {
+		if values[i] == nil {
+			continue
+		}
+		res[id] = values[i].(float64)
+	}
+
+	return res, nil
+}
+
 func (r *floatExampleRepository) Del(id uint) error {
 	return r.cli.Del(r.keyFunc(id))
 }

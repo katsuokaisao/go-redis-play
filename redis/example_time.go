@@ -31,6 +31,28 @@ func (r *timeExampleRepository) Get(id uint) (time.Time, error) {
 	return r.cli.GetTime(r.keyFunc(id))
 }
 
+func (r *timeExampleRepository) MGet(ids ...uint) (map[uint]time.Time, error) {
+	keys := make([]string, len(ids))
+	for i, id := range ids {
+		keys[i] = r.keyFunc(id)
+	}
+
+	values, err := r.cli.MGet(keys...)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make(map[uint]time.Time, len(ids))
+	for i, id := range ids {
+		if values[i] == nil {
+			continue
+		}
+		res[id] = values[i].(time.Time)
+	}
+
+	return res, nil
+}
+
 func (r *timeExampleRepository) Del(id uint) error {
 	return r.cli.Del(r.keyFunc(id))
 }

@@ -45,6 +45,32 @@ func (r *jsonExampleRepository) Get(id uint) (*domain.Example, error) {
 	return &e, nil
 }
 
+func (r *jsonExampleRepository) MGet(ids ...uint) (map[uint]*domain.Example, error) {
+	keys := make([]string, len(ids))
+	for i, id := range ids {
+		keys[i] = r.keyFunc(id)
+	}
+
+	values, err := r.cli.MGet(keys...)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make(map[uint]*domain.Example, len(ids))
+	for i, id := range ids {
+		if values[i] == nil {
+			continue
+		}
+		var e domain.Example
+		if err := json.Unmarshal(values[i].([]byte), &e); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal json: %w", err)
+		}
+		res[id] = &e
+	}
+
+	return res, nil
+}
+
 func (r *jsonExampleRepository) Del(id uint) error {
 	return r.cli.Del(r.keyFunc(id))
 }

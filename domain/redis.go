@@ -17,6 +17,7 @@ type BasicRedisRepository interface {
 	GetBytes(key string) ([]byte, error)
 	SetTime(key string, value time.Time, ttl time.Duration) error
 	GetTime(key string) (time.Time, error)
+	MGet(keys ...string) ([]interface{}, error)
 	Exists(key string) (bool, error)
 	Del(key string) error
 }
@@ -24,6 +25,7 @@ type BasicRedisRepository interface {
 type StrExampleRepository interface {
 	Set(id uint, value string) error
 	Get(id uint) (string, error)
+	MGet(ids ...uint) (map[uint]string, error)
 	Del(id uint) error
 	Exists(id uint) (bool, error)
 }
@@ -31,6 +33,7 @@ type StrExampleRepository interface {
 type IntExampleRepository interface {
 	Set(id uint, value int64) error
 	Get(id uint) (int64, error)
+	MGet(ids ...uint) (map[uint]int64, error)
 	Del(id uint) error
 	Exists(id uint) (bool, error)
 }
@@ -38,6 +41,7 @@ type IntExampleRepository interface {
 type FloatExampleRepository interface {
 	Set(id uint, value float64) error
 	Get(id uint) (float64, error)
+	MGet(ids ...uint) (map[uint]float64, error)
 	Del(id uint) error
 	Exists(id uint) (bool, error)
 }
@@ -45,6 +49,7 @@ type FloatExampleRepository interface {
 type BoolExampleRepository interface {
 	Set(id uint, value bool) error
 	Get(id uint) (bool, error)
+	MGet(ids ...uint) (map[uint]bool, error)
 	Del(id uint) error
 	Exists(id uint) (bool, error)
 }
@@ -52,6 +57,7 @@ type BoolExampleRepository interface {
 type BytesExampleRepository interface {
 	Set(id uint, value []byte) error
 	Get(id uint) ([]byte, error)
+	MGet(ids ...uint) (map[uint][]byte, error)
 	Del(id uint) error
 	Exists(id uint) (bool, error)
 }
@@ -59,6 +65,7 @@ type BytesExampleRepository interface {
 type TimeExampleRepository interface {
 	Set(id uint, value time.Time) error
 	Get(id uint) (time.Time, error)
+	MGet(ids ...uint) (map[uint]time.Time, error)
 	Del(id uint) error
 	Exists(id uint) (bool, error)
 }
@@ -66,6 +73,7 @@ type TimeExampleRepository interface {
 type JSONExampleRepository interface {
 	Set(id uint, value *Example) error
 	Get(id uint) (*Example, error)
+	MGet(ids ...uint) (map[uint]*Example, error)
 	Del(id uint) error
 	Exists(id uint) (bool, error)
 }

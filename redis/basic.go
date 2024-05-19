@@ -102,6 +102,10 @@ func (r *basicRedisRepository) GetTime(key string) (time.Time, error) {
 	return r.cli.Get(key).Time()
 }
 
+func (r *basicRedisRepository) MGet(keys ...string) ([]interface{}, error) {
+	return r.cli.MGet(keys...).Result()
+}
+
 func (r *basicRedisRepository) Exists(key string) (bool, error) {
 	res, err := r.cli.Exists(key).Result()
 	return res == 1, err

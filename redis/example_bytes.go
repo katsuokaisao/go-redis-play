@@ -31,6 +31,28 @@ func (r *bytesExampleRepository) Get(id uint) ([]byte, error) {
 	return r.cli.GetBytes(r.keyFunc(id))
 }
 
+func (r *bytesExampleRepository) MGet(ids ...uint) (map[uint][]byte, error) {
+	keys := make([]string, len(ids))
+	for i, id := range ids {
+		keys[i] = r.keyFunc(id)
+	}
+
+	values, err := r.cli.MGet(keys...)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make(map[uint][]byte, len(ids))
+	for i, id := range ids {
+		if values[i] == nil {
+			continue
+		}
+		res[id] = values[i].([]byte)
+	}
+
+	return res, nil
+}
+
 func (r *bytesExampleRepository) Del(id uint) error {
 	return r.cli.Del(r.keyFunc(id))
 }
