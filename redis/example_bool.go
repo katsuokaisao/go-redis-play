@@ -2,7 +2,6 @@ package redis
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/katsuokaisao/go-redis-play/domain"

@@ -159,8 +159,11 @@ func (r *basicRedisRepository) MGetBool(keys ...string) ([]*bool, error) {
 			res = append(res, nil)
 			continue
 		}
-		i := v.(int)
-		b := i == 1
+		i := v.(string)
+		b, err := strconv.ParseBool(i)
+		if err != nil {
+			return nil, err
+		}
 		res = append(res, &b)
 	}
 
