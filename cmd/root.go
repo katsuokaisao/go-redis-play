@@ -19,6 +19,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(strCmd)
 	rootCmd.AddCommand(intCmd)
+	rootCmd.AddCommand(floatCmd)
 }
 
 func initRedisRepository() domain.BasicRedisRepository {
