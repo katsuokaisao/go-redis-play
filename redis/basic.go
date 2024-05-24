@@ -235,6 +235,22 @@ func (r *basicRedisRepository) MGetTime(keys ...string) ([]*time.Time, error) {
 	return res, nil
 }
 
+func (r *basicRedisRepository) Incr(key string) (int64, error) {
+	return r.cli.Incr(key).Result()
+}
+
+func (r *basicRedisRepository) IncrBy(key string, value int64) (int64, error) {
+	return r.cli.IncrBy(key, value).Result()
+}
+
+func (r *basicRedisRepository) Decr(key string) (int64, error) {
+	return r.cli.Decr(key).Result()
+}
+
+func (r *basicRedisRepository) DecrBy(key string, value int64) (int64, error) {
+	return r.cli.DecrBy(key, value).Result()
+}
+
 func (r *basicRedisRepository) Exists(key string) (bool, error) {
 	res, err := r.cli.Exists(key).Result()
 	return res == 1, err

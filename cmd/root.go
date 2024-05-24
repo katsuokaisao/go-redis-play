@@ -24,6 +24,7 @@ func init() {
 	rootCmd.AddCommand(bytesCmd)
 	rootCmd.AddCommand(timeCmd)
 	rootCmd.AddCommand(jsonCmd)
+	rootCmd.AddCommand(incrDecrCmd)
 }
 
 func initRedisRepository() domain.BasicRedisRepository {

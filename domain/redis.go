@@ -21,6 +21,10 @@ type BasicRedisRepository interface {
 	MGetBytes(keys ...string) ([][]byte, error)
 	GetTime(key string) (time.Time, error)
 	MGetTime(keys ...string) ([]*time.Time, error)
+	Incr(key string) (int64, error)
+	Decr(key string) (int64, error)
+	IncrBy(key string, value int64) (int64, error)
+	DecrBy(key string, value int64) (int64, error)
 	Exists(key string) (bool, error)
 	Del(key string) error
 }
@@ -86,4 +90,13 @@ type JSONExampleRepository interface {
 	MGet(ids ...uint) (map[uint]*Example, error)
 	Del(id uint) error
 	Exists(id uint) (bool, error)
+}
+
+type IncrDecrRepository interface {
+	Get(id uint) (int64, error)
+	Delete(id uint) error
+	Incr(id uint) (int64, error)
+	Decr(id uint) (int64, error)
+	IncrBy(id uint, value int64) (int64, error)
+	DecrBy(id uint, value int64) (int64, error)
 }
