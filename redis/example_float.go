@@ -24,7 +24,7 @@ func NewFloatExampleRepository(cli domain.BasicRedisRepository) domain.FloatExam
 }
 
 func (r *floatExampleRepository) Set(id uint, value float64) error {
-	return r.cli.SetFloat64(r.keyFunc(id), value, r.ttl)
+	return r.cli.Set(r.keyFunc(id), value, r.ttl)
 }
 
 func (r *floatExampleRepository) Get(id uint) (float64, error) {

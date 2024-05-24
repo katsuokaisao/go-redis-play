@@ -24,7 +24,7 @@ func NewTimeExampleRepository(cli domain.BasicRedisRepository) domain.TimeExampl
 }
 
 func (r *timeExampleRepository) Set(id uint, value time.Time) error {
-	return r.cli.SetTime(r.keyFunc(id), value, r.ttl)
+	return r.cli.Set(r.keyFunc(id), value, r.ttl)
 }
 
 func (r *timeExampleRepository) Get(id uint) (time.Time, error) {

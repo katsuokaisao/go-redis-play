@@ -30,7 +30,7 @@ func (r *jsonExampleRepository) Set(id uint, value *domain.Example) error {
 		return fmt.Errorf("failed to marshal json: %w", err)
 	}
 	s := string(b)
-	return r.cli.SetString(r.keyFunc(id), s, r.ttl)
+	return r.cli.Set(r.keyFunc(id), s, r.ttl)
 }
 
 func (r *jsonExampleRepository) Get(id uint) (*domain.Example, error) {

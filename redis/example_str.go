@@ -26,7 +26,7 @@ func NewStrExampleRepository(
 }
 
 func (repo *strExampleRepository) Set(id uint, value string) error {
-	return repo.cli.SetString(repo.keyFunc(id), value, repo.ttl)
+	return repo.cli.Set(repo.keyFunc(id), value, repo.ttl)
 }
 
 func (repo *strExampleRepository) Get(id uint) (string, error) {

@@ -24,7 +24,7 @@ func NewBoolExampleRepository(cli domain.BasicRedisRepository) domain.BoolExampl
 }
 
 func (r *boolExampleRepository) Set(id uint, value bool) error {
-	return r.cli.SetBool(r.keyFunc(id), value, r.ttl)
+	return r.cli.Set(r.keyFunc(id), value, r.ttl)
 }
 
 func (r *boolExampleRepository) Get(id uint) (bool, error) {
