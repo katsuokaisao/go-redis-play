@@ -27,6 +27,15 @@ func (r *boolExampleRepository) Set(id uint, value bool) error {
 	return r.cli.Set(r.keyFunc(id), value, r.ttl)
 }
 
+func (r *boolExampleRepository) MSet(values map[uint]bool) error {
+	args := make(map[string]interface{})
+	for id, value := range values {
+		args[r.keyFunc(id)] = value
+	}
+
+	return r.cli.MSet(args)
+}
+
 func (r *boolExampleRepository) Get(id uint) (bool, error) {
 	return r.cli.GetBool(r.keyFunc(id))
 }

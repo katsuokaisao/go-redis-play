@@ -33,6 +33,19 @@ func (r *jsonExampleRepository) Set(id uint, value *domain.Example) error {
 	return r.cli.Set(r.keyFunc(id), s, r.ttl)
 }
 
+func (r *jsonExampleRepository) MSet(values map[uint]domain.Example) error {
+	args := make(map[string]interface{})
+	for id, value := range values {
+		b, err := json.Marshal(value)
+		if err != nil {
+			return fmt.Errorf("failed to marshal json: %w", err)
+		}
+		args[r.keyFunc(id)] = string(b)
+	}
+
+	return r.cli.MSet(args)
+}
+
 func (r *jsonExampleRepository) Get(id uint) (*domain.Example, error) {
 	s, err := r.cli.GetString(r.keyFunc(id))
 	if err != nil {

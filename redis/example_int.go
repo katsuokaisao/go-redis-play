@@ -29,6 +29,15 @@ func (repo *intExampleRepository) Set(id uint, value int64) error {
 	return repo.cli.Set(repo.keyFunc(id), value, repo.ttl)
 }
 
+func (repo *intExampleRepository) MSet(values map[uint]int64) error {
+	args := make(map[string]interface{})
+	for id, value := range values {
+		args[repo.keyFunc(id)] = value
+	}
+
+	return repo.cli.MSet(args)
+}
+
 func (repo *intExampleRepository) Get(id uint) (int64, error) {
 	return repo.cli.GetInt64(repo.keyFunc(id))
 }

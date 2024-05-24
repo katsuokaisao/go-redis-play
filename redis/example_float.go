@@ -27,6 +27,15 @@ func (r *floatExampleRepository) Set(id uint, value float64) error {
 	return r.cli.Set(r.keyFunc(id), value, r.ttl)
 }
 
+func (r *floatExampleRepository) MSet(values map[uint]float64) error {
+	args := make(map[string]interface{})
+	for id, value := range values {
+		args[r.keyFunc(id)] = value
+	}
+
+	return r.cli.MSet(args)
+}
+
 func (r *floatExampleRepository) Get(id uint) (float64, error) {
 	return r.cli.GetFloat64(r.keyFunc(id))
 }

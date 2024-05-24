@@ -49,13 +49,6 @@ var strCmd = &cobra.Command{
 			fmt.Printf("get id %d has value: %s\n", k, value)
 		}
 
-		keys := []uint{1, 100}
-		values, err := strCli.MGet(keys...)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Printf("mget values: %v\n", values)
-
 		for k := range testDt {
 			if err := strCli.Del(k); err != nil {
 				panic(err)
@@ -85,6 +78,25 @@ var strCmd = &cobra.Command{
 				panic(err)
 			}
 			fmt.Printf("get id %d has value: %s\n", k, value)
+		}
+
+		if err := strCli.MSet(testDt); err != nil {
+			panic(err)
+		}
+		fmt.Printf("mset values: %v\n", testDt)
+
+		keys := []uint{1, 100}
+		values, err := strCli.MGet(keys...)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("mget values: %v\n", values)
+
+		for k := range testDt {
+			if err := strCli.Del(k); err != nil {
+				panic(err)
+			}
+			fmt.Printf("del id %d deleted\n", k)
 		}
 	},
 }

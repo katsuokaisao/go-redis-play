@@ -51,14 +51,6 @@ var bytesCmd = &cobra.Command{
 			fmt.Printf("get id %d has value: %s\n", k, value)
 		}
 
-		values, err := bytesCli.MGet(1, 100)
-		if err != nil {
-			panic(err)
-		}
-		for k, v := range values {
-			fmt.Printf("mget id %d has value: %s\n", k, v)
-		}
-
 		for k := range testDt {
 			if err := bytesCli.Del(k); err != nil {
 				panic(err)
@@ -90,5 +82,24 @@ var bytesCmd = &cobra.Command{
 			fmt.Printf("get id %d has value: %s\n", k, value)
 		}
 
+		if err := bytesCli.MSet(testDt); err != nil {
+			panic(err)
+		}
+		fmt.Printf("mset values: %v\n", testDt)
+
+		values, err := bytesCli.MGet(1, 100)
+		if err != nil {
+			panic(err)
+		}
+		for k, v := range values {
+			fmt.Printf("mget id %d has value: %s\n", k, v)
+		}
+
+		for k := range testDt {
+			if err := bytesCli.Del(k); err != nil {
+				panic(err)
+			}
+			fmt.Printf("del id %d deleted\n", k)
+		}
 	},
 }

@@ -163,7 +163,7 @@ func (r *basicRedisRepository) SetBytes(key string, value []byte, ttl time.Durat
 	return r.cli.Set(key, s, ttl).Err()
 }
 
-func (r *basicRedisRepository) MSetBytes(data map[string][]byte, ttl time.Duration) error {
+func (r *basicRedisRepository) MSetBytes(data map[string][]byte) error {
 	if len(data) == 0 {
 		return nil
 	}

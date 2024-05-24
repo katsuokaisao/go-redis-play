@@ -51,13 +51,6 @@ var boolCmd = &cobra.Command{
 			fmt.Printf("get id %d has value: %t\n", k, value)
 		}
 
-		keys := []uint{1, 100}
-		values, err := boolCli.MGet(keys...)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Printf("mget values: %v\n", values)
-
 		for k := range testDt {
 			if err := boolCli.Del(k); err != nil {
 				panic(err)
@@ -88,6 +81,25 @@ var boolCmd = &cobra.Command{
 				}
 			}
 			fmt.Printf("get id %d has value: %t\n", k, value)
+		}
+
+		if err := boolCli.MSet(testDt); err != nil {
+			panic(err)
+		}
+		fmt.Printf("mset values: %v\n", testDt)
+
+		keys := []uint{1, 100}
+		values, err := boolCli.MGet(keys...)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("mget values: %v\n", values)
+
+		for k := range testDt {
+			if err := boolCli.Del(k); err != nil {
+				panic(err)
+			}
+			fmt.Printf("del id %d deleted\n", k)
 		}
 	},
 }

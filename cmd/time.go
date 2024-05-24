@@ -52,12 +52,6 @@ var timeCmd = &cobra.Command{
 			fmt.Printf("get id %d has value: %s\n", k, value)
 		}
 
-		values, err := timeCli.MGet(1, 100)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Printf("mget values: %v\n", values)
-
 		for k := range testDt {
 			if err := timeCli.Del(k); err != nil {
 				panic(err)
@@ -87,6 +81,24 @@ var timeCmd = &cobra.Command{
 				panic(err)
 			}
 			fmt.Printf("get id %d has value: %s\n", k, value)
+		}
+
+		if err := timeCli.MSet(testDt); err != nil {
+			panic(err)
+		}
+		fmt.Printf("mset values: %v\n", testDt)
+
+		values, err := timeCli.MGet(1, 100)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("mget values: %v\n", values)
+
+		for k := range testDt {
+			if err := timeCli.Del(k); err != nil {
+				panic(err)
+			}
+			fmt.Printf("del id %d deleted\n", k)
 		}
 	},
 }

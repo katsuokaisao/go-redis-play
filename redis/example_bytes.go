@@ -27,6 +27,15 @@ func (r *bytesExampleRepository) Set(id uint, value []byte) error {
 	return r.cli.SetBytes(r.keyFunc(id), value, r.ttl)
 }
 
+func (r *bytesExampleRepository) MSet(values map[uint][]byte) error {
+	args := make(map[string][]byte)
+	for id, value := range values {
+		args[r.keyFunc(id)] = value
+	}
+
+	return r.cli.MSetBytes(args)
+}
+
 func (r *bytesExampleRepository) Get(id uint) ([]byte, error) {
 	return r.cli.GetBytes(r.keyFunc(id))
 }

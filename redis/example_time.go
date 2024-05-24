@@ -27,6 +27,15 @@ func (r *timeExampleRepository) Set(id uint, value time.Time) error {
 	return r.cli.Set(r.keyFunc(id), value, r.ttl)
 }
 
+func (r *timeExampleRepository) MSet(values map[uint]time.Time) error {
+	args := make(map[string]interface{})
+	for id, value := range values {
+		args[r.keyFunc(id)] = value
+	}
+
+	return r.cli.MSet(args)
+}
+
 func (r *timeExampleRepository) Get(id uint) (time.Time, error) {
 	return r.cli.GetTime(r.keyFunc(id))
 }

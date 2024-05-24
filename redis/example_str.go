@@ -29,6 +29,15 @@ func (repo *strExampleRepository) Set(id uint, value string) error {
 	return repo.cli.Set(repo.keyFunc(id), value, repo.ttl)
 }
 
+func (repo *strExampleRepository) MSet(values map[uint]string) error {
+	args := make(map[string]interface{})
+	for id, value := range values {
+		args[repo.keyFunc(id)] = value
+	}
+
+	return repo.cli.MSet(args)
+}
+
 func (repo *strExampleRepository) Get(id uint) (string, error) {
 	return repo.cli.GetString(repo.keyFunc(id))
 }
