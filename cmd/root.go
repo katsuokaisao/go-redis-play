@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -25,6 +26,7 @@ func init() {
 	rootCmd.AddCommand(timeCmd)
 	rootCmd.AddCommand(jsonCmd)
 	rootCmd.AddCommand(incrDecrCmd)
+	rootCmd.AddCommand(listCmd)
 }
 
 func initRedisRepository() domain.BasicRedisRepository {
@@ -61,4 +63,14 @@ func initRedisRepository() domain.BasicRedisRepository {
 
 func Execute() error {
 	return rootCmd.Execute()
+}
+
+func printJSON(o interface{}, msg string) error {
+	b, err := json.MarshalIndent(o, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("%s\n%s\n", msg, string(b))
+	return nil
 }

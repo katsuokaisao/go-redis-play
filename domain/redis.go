@@ -1,6 +1,8 @@
 package domain
 
-import "time"
+import (
+	"time"
+)
 
 type BasicRedisRepository interface {
 	Ping(retryNum int) error
@@ -25,6 +27,12 @@ type BasicRedisRepository interface {
 	Decr(key string) (int64, error)
 	IncrBy(key string, value int64) (int64, error)
 	DecrBy(key string, value int64) (int64, error)
+	LPush(key string, values ...interface{}) error
+	RPush(key string, values ...interface{}) error
+	LPop(key string) (string, error)
+	RPop(key string) (string, error)
+	LLen(key string) (int64, error)
+	LRange(key string, start, stop int64) ([]string, error)
 	Exists(key string) (bool, error)
 	Del(key string) error
 }
@@ -99,4 +107,14 @@ type IncrDecrRepository interface {
 	Decr(id uint) (int64, error)
 	IncrBy(id uint, value int64) (int64, error)
 	DecrBy(id uint, value int64) (int64, error)
+}
+
+type ListExampleRepository interface {
+	LPush(values []Example) error
+	RPush(values []Example) error
+	LPop() (*Example, error)
+	RPop() (*Example, error)
+	LLen() (int64, error)
+	LRange(start, stop int64) ([]Example, error)
+	Del() error
 }

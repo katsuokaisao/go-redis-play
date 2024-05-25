@@ -251,6 +251,30 @@ func (r *basicRedisRepository) DecrBy(key string, value int64) (int64, error) {
 	return r.cli.DecrBy(key, value).Result()
 }
 
+func (r *basicRedisRepository) LPush(key string, values ...interface{}) error {
+	return r.cli.LPush(key, values...).Err()
+}
+
+func (r *basicRedisRepository) RPush(key string, values ...interface{}) error {
+	return r.cli.RPush(key, values...).Err()
+}
+
+func (r *basicRedisRepository) LPop(key string) (string, error) {
+	return r.cli.LPop(key).Result()
+}
+
+func (r *basicRedisRepository) RPop(key string) (string, error) {
+	return r.cli.RPop(key).Result()
+}
+
+func (r *basicRedisRepository) LLen(key string) (int64, error) {
+	return r.cli.LLen(key).Result()
+}
+
+func (r *basicRedisRepository) LRange(key string, start, stop int64) ([]string, error) {
+	return r.cli.LRange(key, start, stop).Result()
+}
+
 func (r *basicRedisRepository) Exists(key string) (bool, error) {
 	res, err := r.cli.Exists(key).Result()
 	return res == 1, err
