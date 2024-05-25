@@ -98,5 +98,5 @@ func (repo *listExampleRepository) LRange(start, stop int64) ([]domain.Example, 
 }
 
 func (repo *listExampleRepository) Del() error {
-	return repo.cli.Del(repo.key)
+	return repo.cli.Unlink(repo.key)
 }

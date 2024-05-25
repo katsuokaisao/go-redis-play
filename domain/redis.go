@@ -34,7 +34,12 @@ type BasicRedisRepository interface {
 	LLen(key string) (int64, error)
 	LRange(key string, start, stop int64) ([]string, error)
 	Exists(key string) (bool, error)
-	Del(key string) error
+	Type(key string) (string, error)
+	DBSize() (int64, error)
+	// DEL & KEYS の使用は禁止
+	// 代わりに UNLINK & SCAN を使用する
+	Unlink(keys ...string) error
+	Scan(match string, count int64) ([]string, error)
 }
 
 type StrExampleRepository interface {
@@ -117,4 +122,15 @@ type ListExampleRepository interface {
 	LLen() (int64, error)
 	LRange(start, stop int64) ([]Example, error)
 	Del() error
+}
+
+// Type, DBSize, Scan, Unlink test
+type BasicExampleRepository interface {
+	DBSize() (int64, error)
+	ScanStr() ([]string, error)
+	ScanList() ([]string, error)
+	UnlinkStr(ids []uint) error
+	UnlinkList() error
+	Set(id uint, value string) error
+	LPush(values []Example) error
 }

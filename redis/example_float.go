@@ -63,7 +63,7 @@ func (r *floatExampleRepository) MGet(ids ...uint) (map[uint]float64, error) {
 }
 
 func (r *floatExampleRepository) Del(id uint) error {
-	return r.cli.Del(r.keyFunc(id))
+	return r.cli.Unlink(r.keyFunc(id))
 }
 
 func (r *floatExampleRepository) Exists(id uint) (bool, error) {

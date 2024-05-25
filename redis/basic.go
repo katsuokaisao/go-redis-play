@@ -283,3 +283,35 @@ func (r *basicRedisRepository) Exists(key string) (bool, error) {
 func (r *basicRedisRepository) Del(key string) error {
 	return r.cli.Del(key).Err()
 }
+
+func (r *basicRedisRepository) Type(key string) (string, error) {
+	return r.cli.Type(key).Result()
+}
+
+func (r *basicRedisRepository) DBSize() (int64, error) {
+	return r.cli.DBSize().Result()
+}
+
+func (r *basicRedisRepository) Unlink(keys ...string) error {
+	return r.cli.Unlink(keys...).Err()
+}
+
+func (r *basicRedisRepository) Scan(match string, count int64) ([]string, error) {
+	var (
+		cursor uint64
+		keys   []string
+		err error
+	)
+
+	for {
+		keys, cursor, err = r.cli.Scan(cursor, match, count).Result()
+		if err != nil {
+			return nil, err
+		}
+		if cursor == 0 {
+			break
+		}
+	}
+
+	return keys, nil
+}

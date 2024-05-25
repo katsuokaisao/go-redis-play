@@ -65,7 +65,7 @@ func (repo *strExampleRepository) MGet(ids ...uint) (map[uint]string, error) {
 }
 
 func (repo *strExampleRepository) Del(id uint) error {
-	return repo.cli.Del(repo.keyFunc(id))
+	return repo.cli.Unlink(repo.keyFunc(id))
 }
 
 func (repo *strExampleRepository) Exists(id uint) (bool, error) {

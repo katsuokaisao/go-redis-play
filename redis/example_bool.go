@@ -63,7 +63,7 @@ func (r *boolExampleRepository) MGet(ids ...uint) (map[uint]bool, error) {
 }
 
 func (r *boolExampleRepository) Del(id uint) error {
-	return r.cli.Del(r.keyFunc(id))
+	return r.cli.Unlink(r.keyFunc(id))
 }
 
 func (r *boolExampleRepository) Exists(id uint) (bool, error) {

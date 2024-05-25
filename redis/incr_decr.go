@@ -28,7 +28,7 @@ func (repo *incrDecrRepository) Get(id uint) (int64, error) {
 }
 
 func (repo *incrDecrRepository) Delete(id uint) error {
-	return repo.cli.Del(repo.keyFunc(id))
+	return repo.cli.Unlink(repo.keyFunc(id))
 }
 
 func (repo *incrDecrRepository) Incr(id uint) (int64, error) {

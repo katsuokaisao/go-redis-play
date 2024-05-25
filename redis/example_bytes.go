@@ -63,7 +63,7 @@ func (r *bytesExampleRepository) MGet(ids ...uint) (map[uint][]byte, error) {
 }
 
 func (r *bytesExampleRepository) Del(id uint) error {
-	return r.cli.Del(r.keyFunc(id))
+	return r.cli.Unlink(r.keyFunc(id))
 }
 
 func (r *bytesExampleRepository) Exists(id uint) (bool, error) {

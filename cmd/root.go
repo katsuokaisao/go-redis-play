@@ -27,6 +27,7 @@ func init() {
 	rootCmd.AddCommand(jsonCmd)
 	rootCmd.AddCommand(incrDecrCmd)
 	rootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(basicCmd)
 }
 
 func initRedisRepository() domain.BasicRedisRepository {

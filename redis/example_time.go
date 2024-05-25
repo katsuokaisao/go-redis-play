@@ -63,7 +63,7 @@ func (r *timeExampleRepository) MGet(ids ...uint) (map[uint]time.Time, error) {
 }
 
 func (r *timeExampleRepository) Del(id uint) error {
-	return r.cli.Del(r.keyFunc(id))
+	return r.cli.Unlink(r.keyFunc(id))
 }
 
 func (r *timeExampleRepository) Exists(id uint) (bool, error) {

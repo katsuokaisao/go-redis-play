@@ -85,7 +85,7 @@ func (r *jsonExampleRepository) MGet(ids ...uint) (map[uint]*domain.Example, err
 }
 
 func (r *jsonExampleRepository) Del(id uint) error {
-	return r.cli.Del(r.keyFunc(id))
+	return r.cli.Unlink(r.keyFunc(id))
 }
 
 func (r *jsonExampleRepository) Exists(id uint) (bool, error) {
